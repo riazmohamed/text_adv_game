@@ -686,6 +686,7 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         this.currentLocationDisplay.textContent = currentRoom ? currentRoom.name : 'Unknown';
         this.healthDisplay.textContent = `${this.player.health}/${this.player.maxHealth}`;
         this.inventoryDisplay.textContent = this.player.getInventory();
+        this.updateCompass();
     }
     
     // Display a message in the game output
@@ -711,6 +712,48 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         this.commandInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 submitCommand();
+            }
+        });
+        
+        // Direction buttons
+        const directionButtons = document.querySelectorAll('.direction-btn');
+        directionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const direction = btn.dataset.direction;
+                this.displayMessage(`> go ${direction}`);
+                const result = this.processCommand(`go ${direction}`);
+                this.displayMessage(result);
+            });
+        });
+        
+        // Action buttons
+        const actionButtons = document.querySelectorAll('.action-btn');
+        actionButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action;
+                this.displayMessage(`> ${action}`);
+                const result = this.processCommand(action);
+                this.displayMessage(result);
+            });
+        });
+    }
+    
+    // Update compass buttons based on available exits
+    updateCompass() {
+        const currentRoom = this.getRoom(this.player.currentLocation);
+        if (!currentRoom) return;
+        
+        const availableExits = currentRoom.getExits();
+        const directions = ['north', 'south', 'east', 'west'];
+        
+        directions.forEach(dir => {
+            const btn = document.querySelector(`.direction-btn.${dir}`);
+            if (btn) {
+                if (availableExits.includes(dir)) {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = true;
+                }
             }
         });
     }

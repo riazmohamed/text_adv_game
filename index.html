@@ -20,8 +20,29 @@
                 </div>
             </div>
             
+            <!-- Direction Compass -->
+            <div class="compass-container">
+                <div class="compass">
+                    <button class="direction-btn north" data-direction="north">↑ North</button>
+                    <div class="compass-middle">
+                        <button class="direction-btn west" data-direction="west">← West</button>
+                        <div class="compass-center">Navigation</div>
+                        <button class="direction-btn east" data-direction="east">East →</button>
+                    </div>
+                    <button class="direction-btn south" data-direction="south">↓ South</button>
+                </div>
+            </div>
+            
+            <!-- Quick Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" data-action="look">👁️ Look</button>
+                <button class="action-btn" data-action="inventory">🎒 Inventory</button>
+                <button class="action-btn" data-action="status">❤️ Status</button>
+                <button class="action-btn" data-action="help">❓ Help</button>
+            </div>
+            
             <div class="game-input">
-                <input type="text" id="command-input" placeholder="Enter your command..." autofocus>
+                <input type="text" id="command-input" placeholder="Type command or use buttons above..." autofocus>
                 <button id="submit-button">Go</button>
             </div>
             

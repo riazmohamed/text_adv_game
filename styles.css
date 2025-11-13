@@ -60,6 +60,98 @@ header p {
     line-height: 1.6;
 }
 
+/* Compass Navigation */
+.compass-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.compass {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+}
+
+.compass-middle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.compass-center {
+    padding: 10px 20px;
+    color: #53d8fb;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.direction-btn {
+    background-color: rgba(83, 216, 251, 0.2);
+    color: #53d8fb;
+    border: 2px solid #53d8fb;
+    padding: 12px 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+    min-width: 120px;
+}
+
+.direction-btn:hover:not(:disabled) {
+    background-color: rgba(83, 216, 251, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #53d8fb;
+}
+
+.direction-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: #555;
+    color: #555;
+}
+
+.direction-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background-color: rgba(233, 69, 96, 0.2);
+    color: #e94560;
+    border: 2px solid #e94560;
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.action-btn:hover {
+    background-color: rgba(233, 69, 96, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(233, 69, 96, 0.3);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
 .game-input {
     display: flex;
     gap: 10px;
