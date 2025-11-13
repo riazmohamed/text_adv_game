@@ -1,0 +1,173 @@
+/* Space-themed styling for the text adventure game */
+
+body {
+    font-family: 'Courier New', monospace;
+    background-color: #0a0a0a;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.game-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    min-height: 100vh;
+    border-left: 2px solid #0f3460;
+    border-right: 2px solid #0f3460;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e94560;
+}
+
+header h1 {
+    color: #e94560;
+    font-size: 2.5rem;
+    margin: 0;
+    text-shadow: 0 0 10px #e94560;
+}
+
+header p {
+    color: #a0a0a0;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.game-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.game-display {
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 5px;
+    padding: 20px;
+    min-height: 300px;
+    overflow-y: auto;
+}
+
+.game-output {
+    white-space: pre-wrap;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.game-input {
+    display: flex;
+    gap: 10px;
+}
+
+#command-input {
+    flex: 1;
+    background-color: rgba(15, 52, 96, 0.5);
+    border: 1px solid #0f3460;
+    color: #e0e0e0;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    border-radius: 3px;
+}
+
+#command-input:focus {
+    outline: none;
+    border-color: #e94560;
+    box-shadow: 0 0 5px #e94560;
+}
+
+#submit-button {
+    background-color: #e94560;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+#submit-button:hover {
+    background-color: #c23651;
+}
+
+.game-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.status-section {
+    flex: 1;
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.status-section h3 {
+    margin: 0 0 10px 0;
+    color: #e94560;
+    font-size: 1.1rem;
+}
+
+footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #0f3460;
+}
+
+.help-text {
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 0.9rem;
+}
+
+/* Game text styling */
+.location-name {
+    color: #53d8fb;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.item-name {
+    color: #f7b731;
+}
+
+.creature-name {
+    color: #e94560;
+}
+
+.success-text {
+    color: #0be881;
+}
+
+.danger-text {
+    color: #e94560;
+}
+
+.warning-text {
+    color: #f7b731;
+}
+
+.info-text {
+    color: #53d8fb;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .game-status {
+        flex-direction: column;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+}

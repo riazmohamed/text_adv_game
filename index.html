@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alien Planet Survival - Text Adventure Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>Alien Planet Survival</h1>
+            <p>You've crash-landed on a mysterious alien planet. Survive the creatures and find a way to call for rescue!</p>
+        </header>
+        
+        <main class="game-main">
+            <div class="game-display">
+                <div id="game-output" class="game-output">
+                    <!-- Game text will be displayed here -->
+                </div>
+            </div>
+            
+            <div class="game-input">
+                <input type="text" id="command-input" placeholder="Enter your command..." autofocus>
+                <button id="submit-button">Go</button>
+            </div>
+            
+            <div class="game-status">
+                <div class="status-section">
+                    <h3>Location</h3>
+                    <div id="current-location">Unknown</div>
+                </div>
+                <div class="status-section">
+                    <h3>Health</h3>
+                    <div id="health-status">100/100</div>
+                </div>
+                <div class="status-section">
+                    <h3>Inventory</h3>
+                    <div id="inventory">Empty</div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="help-text">
+                <p>Commands: go [direction], look, take [item], use [item], attack [creature], help</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
