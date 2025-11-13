@@ -687,6 +687,59 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         this.healthDisplay.textContent = `${this.player.health}/${this.player.maxHealth}`;
         this.inventoryDisplay.textContent = this.player.getInventory();
         this.updateCompass();
+        this.updateContextButtons();
+    }
+    
+    // Update context-sensitive buttons
+    updateContextButtons() {
+        const contextContainer = document.getElementById('context-buttons');
+        contextContainer.innerHTML = '';
+        
+        const currentRoom = this.getRoom(this.player.currentLocation);
+        if (!currentRoom) return;
+        
+        // Add take buttons for items in room
+        currentRoom.items.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = 'context-btn take-btn';
+            btn.textContent = `📦 Take ${item.name}`;
+            btn.addEventListener('click', () => {
+                this.displayMessage(`> take ${item.name}`);
+                const result = this.processCommand(`take ${item.name}`);
+                this.displayMessage(result);
+            });
+            contextContainer.appendChild(btn);
+        });
+        
+        // Add attack buttons for hostile creatures
+        currentRoom.creatures.forEach(creature => {
+            if (creature.isHostile && creature.isAlive) {
+                const btn = document.createElement('button');
+                btn.className = 'context-btn attack-btn';
+                btn.textContent = `⚔️ Attack ${creature.name}`;
+                btn.addEventListener('click', () => {
+                    this.displayMessage(`> attack ${creature.name}`);
+                    const result = this.processCommand(`attack ${creature.name}`);
+                    this.displayMessage(result);
+                });
+                contextContainer.appendChild(btn);
+            }
+        });
+        
+        // Add use buttons for usable items in inventory
+        this.player.inventory.forEach(item => {
+            if (item.isUsable) {
+                const btn = document.createElement('button');
+                btn.className = 'context-btn use-btn';
+                btn.textContent = `✨ Use ${item.name}`;
+                btn.addEventListener('click', () => {
+                    this.displayMessage(`> use ${item.name}`);
+                    const result = this.processCommand(`use ${item.name}`);
+                    this.displayMessage(result);
+                });
+                contextContainer.appendChild(btn);
+            }
+        });
     }
     
     // Display a message in the game output
