@@ -1,0 +1,21 @@
+# Development notes - DO NOT COMMIT
+NOTES.md
+notes.md
+NOTES.txt
+notes.txt
+dev-notes.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
