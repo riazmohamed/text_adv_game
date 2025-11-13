@@ -169,7 +169,7 @@ class Player {
     }
     
     // Move to a new room
-    move(direction) {
+    move(direction, gameEngine) {
         const currentRoom = gameEngine.getRoom(this.currentLocation);
         if (!currentRoom) return "You're in an unknown location.";
         
@@ -190,14 +190,14 @@ class Player {
     }
     
     // Take an item from the current room
-    take(itemId) {
+    take(itemId, gameEngine) {
         const currentRoom = gameEngine.getRoom(this.currentLocation);
         if (!currentRoom) return "You're in an unknown location.";
         
         const item = currentRoom.getItem(itemId);
         if (!item) {
             // Try to find by name
-            const itemByName = currentRoom.items.find(i => 
+            const itemByName = currentRoom.items.find(i =>
                 i.name.toLowerCase() === itemId.toLowerCase());
             if (!itemByName) {
                 return `There is no ${itemId} here.`;
@@ -231,7 +231,7 @@ class Player {
     }
     
     // Attack a creature in the current room
-    attack(creatureName) {
+    attack(creatureName, gameEngine) {
         const currentRoom = gameEngine.getRoom(this.currentLocation);
         if (!currentRoom) return "You're in an unknown location.";
         
@@ -586,7 +586,7 @@ class GameEngine {
                 if (!target) {
                     result = "Go where? Specify a direction (north, south, east, west).";
                 } else {
-                    result = this.player.move(target);
+                    result = this.player.move(target, this);
                 }
                 break;
                 
@@ -601,7 +601,7 @@ class GameEngine {
                 if (!target) {
                     result = "Take what? Specify an item name.";
                 } else {
-                    result = this.player.take(target);
+                    result = this.player.take(target, this);
                 }
                 break;
                 
@@ -619,7 +619,7 @@ class GameEngine {
                 if (!target) {
                     result = "Attack what? Specify a creature name.";
                 } else {
-                    result = this.player.attack(target);
+                    result = this.player.attack(target, this);
                 }
                 break;
                 
