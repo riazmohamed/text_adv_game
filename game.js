@@ -836,19 +836,19 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
                 }
             }
         });
-        
-        // Function to close image modal
-        function closeImageModal() {
-            const modal = document.getElementById('image-modal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
     }
 }
 
 // Global game engine variable
 let gameEngine;
+
+// Function to close image modal (must be global for onclick to work)
+function closeImageModal() {
+    const modal = document.getElementById('image-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
 
 // Welcome Screen Handler
 document.addEventListener('DOMContentLoaded', () => {
