@@ -308,11 +308,10 @@ class Player {
             result += ` The ${creature.name} is <span class="combat-highlight">dead</span>!`;
             currentRoom.removeCreature(creature.id);
 
-            // Increment activeCreatureIndex and show next creature modal if available
-            currentRoom.activeCreatureIndex++;
+            // Check for next creature and show modal (activeCreatureIndex stays at 0)
             const remainingHostile = currentRoom.creatures.filter(c => c.isHostile && c.isAlive);
-            if (remainingHostile.length > 0 && currentRoom.activeCreatureIndex < remainingHostile.length) {
-                const nextCreature = remainingHostile[currentRoom.activeCreatureIndex];
+            if (remainingHostile.length > 0) {
+                const nextCreature = remainingHostile[0]; // Next creature is now at index 0
                 if (nextCreature && nextCreature.image) {
                     // Show modal for next creature
                     setTimeout(() => {
@@ -323,6 +322,8 @@ class Player {
                             modalImage.src = nextCreature.image;
                             modalImage.alt = `${nextCreature.name} - ${nextCreature.description}`;
                         }
+                        // Refresh buttons to enable next creature
+                        gameEngine.updateContextButtons();
                     }, 500); // Small delay for dramatic effect
                 }
             }
