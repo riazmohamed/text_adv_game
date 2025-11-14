@@ -384,6 +384,16 @@ class GameEngine {
                 // Check if player died
                 if (!this.player.isAlive) {
                     this.isGameOver = true;
+
+                    // Show game over image in modal
+                    const modal = document.getElementById('image-modal');
+                    const modalImage = document.getElementById('modal-room-image');
+                    if (modal && modalImage) {
+                        modal.style.display = 'flex';
+                        modalImage.src = './assets/game_over.png';
+                        modalImage.alt = 'Game Over - You Have Died!';
+                    }
+
                     this.displayMessage(`<span class="danger-text">You have died! GAME OVER.</span>`);
                 }
             }
@@ -651,6 +661,22 @@ class GameEngine {
                 20,
                 0,
                 false
+            ),
+            mountain_guardian: new Creature(
+                'mountain_guardian',
+                'Mountain Guardian',
+                'A massive, armored alien beast adapted to the harsh mountain environment. Its thick hide glistens with ice crystals.',
+                55,
+                18,
+                true
+            ),
+            peak_sentinel: new Creature(
+                'peak_sentinel',
+                'Peak Sentinel',
+                'A swift, aggressive predator that stalks the mountain peaks. Its razor-sharp claws leave deep gouges in the rock.',
+                40,
+                16,
+                true
             )
         };
     }
@@ -673,7 +699,9 @@ class GameEngine {
         this.rooms.research_facility.addCreature(this.creatures.alien_beast);
         
         this.rooms.mountain_peak.addItem(this.items.beacon);
-        
+        this.rooms.mountain_peak.addCreature(this.creatures.mountain_guardian);
+        this.rooms.mountain_peak.addCreature(this.creatures.peak_sentinel);
+
         this.rooms.underground_tunnels.addItem(this.items.knife);
         this.rooms.underground_tunnels.addCreature(this.creatures.friendly_alien);
     }
@@ -718,6 +746,16 @@ class GameEngine {
             // Check if player died
             if (!this.player.isAlive) {
                 this.isGameOver = true;
+
+                // Show game over image in modal
+                const modal = document.getElementById('image-modal');
+                const modalImage = document.getElementById('modal-room-image');
+                if (modal && modalImage) {
+                    modal.style.display = 'flex';
+                    modalImage.src = './assets/game_over.png';
+                    modalImage.alt = 'Game Over - You Have Died!';
+                }
+
                 result += `\n\n<span class="danger-text">You have died! GAME OVER.</span>`;
             }
             
@@ -762,6 +800,16 @@ class GameEngine {
                     // Check if player died
                     if (!this.player.isAlive) {
                         this.isGameOver = true;
+
+                        // Show game over image in modal
+                        const modal = document.getElementById('image-modal');
+                        const modalImage = document.getElementById('modal-room-image');
+                        if (modal && modalImage) {
+                            modal.style.display = 'flex';
+                            modalImage.src = './assets/game_over.png';
+                            modalImage.alt = 'Game Over - You Have Died!';
+                        }
+
                         result += `\n\n<span class="danger-text">You have died! GAME OVER.</span>`;
                     }
                 }
