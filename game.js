@@ -840,7 +840,9 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         // Function to close image modal
         function closeImageModal() {
             const modal = document.getElementById('image-modal');
-            modal.style.display = 'none';
+            if (modal) {
+                modal.style.display = 'none';
+            }
         }
     }
 }
