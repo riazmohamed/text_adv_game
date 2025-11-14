@@ -45,6 +45,22 @@ header p {
     gap: 20px;
 }
 
+.game-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Left Panel - Fixed/Sticky */
+.game-left-panel {
+    position: sticky;
+    top: 20px;
+    flex: 0 0 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .game-visuals {
     width: 100%;
     height: 250px;
@@ -62,12 +78,21 @@ header p {
     transition: opacity 0.5s ease-in-out;
 }
 
+/* Right Panel - Scrollable */
+.game-right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 .game-display {
     background-color: rgba(15, 52, 96, 0.3);
     border: 1px solid #0f3460;
     border-radius: 5px;
     padding: 20px;
-    min-height: 300px;
+    min-height: 400px;
+    max-height: 600px;
     overflow-y: auto;
 }
 
@@ -81,7 +106,6 @@ header p {
 .compass-container {
     display: flex;
     justify-content: center;
-    margin: 20px 0;
 }
 
 .compass {
@@ -89,10 +113,11 @@ header p {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 20px;
+    padding: 15px;
     background-color: rgba(15, 52, 96, 0.3);
     border: 1px solid #0f3460;
     border-radius: 10px;
+    width: 100%;
 }
 
 .compass-middle {
@@ -112,13 +137,13 @@ header p {
     background-color: rgba(83, 216, 251, 0.2);
     color: #53d8fb;
     border: 2px solid #53d8fb;
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-family: 'Courier New', monospace;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s;
-    min-width: 120px;
+    min-width: 100px;
 }
 
 .direction-btn:hover:not(:disabled) {
@@ -142,8 +167,7 @@ header p {
 .action-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
+    gap: 8px;
     flex-wrap: wrap;
 }
 
@@ -151,12 +175,13 @@ header p {
     background-color: rgba(233, 69, 96, 0.2);
     color: #e94560;
     border: 2px solid #e94560;
-    padding: 10px 20px;
+    padding: 8px 16px;
     font-family: 'Courier New', monospace;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     cursor: pointer;
     border-radius: 5px;
     transition: all 0.3s;
+    flex: 1 1 45%;
 }
 
 .action-btn:hover {
@@ -173,10 +198,9 @@ header p {
 .context-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
+    gap: 8px;
     flex-wrap: wrap;
-    min-height: 50px;
+    min-height: 40px;
 }
 
 .context-btn {
@@ -329,11 +353,26 @@ footer {
 
 /* Responsive design */
 @media (max-width: 768px) {
+    .game-layout {
+        flex-direction: column;
+    }
+    
+    .game-left-panel {
+        position: relative;
+        top: 0;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+    
     .game-status {
         flex-direction: column;
     }
     
     header h1 {
         font-size: 2rem;
+    }
+    
+    .game-display {
+        max-height: none;
     }
 }

@@ -14,44 +14,53 @@
         </header>
         
         <main class="game-main">
-            <div class="game-visuals">
-                <img id="room-image" src="" alt="Current Location" style="display:none;">
-            </div>
-            <div class="game-display">
-                <div id="game-output" class="game-output">
-                    <!-- Game text will be displayed here -->
-                </div>
-            </div>
-            
-            <!-- Direction Compass -->
-            <div class="compass-container">
-                <div class="compass">
-                    <button class="direction-btn north" data-direction="north">↑ North</button>
-                    <div class="compass-middle">
-                        <button class="direction-btn west" data-direction="west">← West</button>
-                        <div class="compass-center">Navigation</div>
-                        <button class="direction-btn east" data-direction="east">East →</button>
+            <div class="game-layout">
+                <!-- Left side: Visual and Controls -->
+                <div class="game-left-panel">
+                    <div class="game-visuals">
+                        <img id="room-image" src="" alt="Current Location" style="display:none;">
                     </div>
-                    <button class="direction-btn south" data-direction="south">↓ South</button>
+                    
+                    <!-- Direction Compass -->
+                    <div class="compass-container">
+                        <div class="compass">
+                            <button class="direction-btn north" data-direction="north">↑ North</button>
+                            <div class="compass-middle">
+                                <button class="direction-btn west" data-direction="west">← West</button>
+                                <div class="compass-center">Navigation</div>
+                                <button class="direction-btn east" data-direction="east">East →</button>
+                            </div>
+                            <button class="direction-btn south" data-direction="south">↓ South</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-btn" data-action="look">👁️ Look</button>
+                        <button class="action-btn" data-action="inventory">🎒 Inventory</button>
+                        <button class="action-btn" data-action="status">❤️ Status</button>
+                        <button class="action-btn" data-action="help">❓ Help</button>
+                    </div>
+                    
+                    <!-- Dynamic Context Buttons -->
+                    <div id="context-buttons" class="context-buttons">
+                        <!-- Items and creatures buttons will appear here dynamically -->
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Quick Action Buttons -->
-            <div class="action-buttons">
-                <button class="action-btn" data-action="look">👁️ Look</button>
-                <button class="action-btn" data-action="inventory">🎒 Inventory</button>
-                <button class="action-btn" data-action="status">❤️ Status</button>
-                <button class="action-btn" data-action="help">❓ Help</button>
-            </div>
-            
-            <!-- Dynamic Context Buttons -->
-            <div id="context-buttons" class="context-buttons">
-                <!-- Items and creatures buttons will appear here dynamically -->
-            </div>
-            
-            <div class="game-input">
-                <input type="text" id="command-input" placeholder="Type command or use buttons above..." autofocus>
-                <button id="submit-button">Go</button>
+                
+                <!-- Right side: Game Output -->
+                <div class="game-right-panel">
+                    <div class="game-display">
+                        <div id="game-output" class="game-output">
+                            <!-- Game text will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <div class="game-input">
+                        <input type="text" id="command-input" placeholder="Type command or use buttons above..." autofocus>
+                        <button id="submit-button">Go</button>
+                    </div>
+                </div>
             </div>
             
             <div class="game-status">
