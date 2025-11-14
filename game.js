@@ -893,9 +893,19 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         // Check lose condition
         if (!this.player.isAlive) {
             this.isGameOver = true;
+
+            // Show game over image in modal
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-room-image');
+            if (modal && modalImage) {
+                modal.style.display = 'flex';
+                modalImage.src = './assets/game_over.png';
+                modalImage.alt = 'Game Over - You Have Died!';
+            }
+
             this.displayMessage(`<span class="danger-text">You have died! GAME OVER.</span>`);
         }
-        
+
         // Win condition is checked in beacon.use() function
     }
     
