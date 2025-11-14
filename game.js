@@ -25,7 +25,7 @@ class Item {
 
 // Creature Class - Represents creatures in the game
 class Creature {
-    constructor(id, name, description, health, damage, isHostile = true) {
+    constructor(id, name, description, health, damage, isHostile = true, image = null) {
         this.id = id; // Unique identifier for the creature
         this.name = name; // Display name of the creature
         this.description = description; // Text description of the creature
@@ -34,6 +34,7 @@ class Creature {
         this.damage = damage; // Damage dealt in combat
         this.isHostile = isHostile; // Is the creature hostile to the player?
         this.isAlive = true; // Is the creature alive?
+        this.image = image; // Image path for creature modal
     }
     
     // Attack the player
@@ -79,6 +80,7 @@ class Room {
         this.creatures = []; // Creatures in the room
         this.exits = {}; // Exits to other rooms (north, south, east, west)
         this.isVisited = false; // Has the player visited this room before?
+        this.activeCreatureIndex = 0; // Index of currently active creature for sequential encounters
     }
     
     // Get the room's description
@@ -201,12 +203,29 @@ class Player {
         
         this.currentLocation = nextRoomId;
         const nextRoom = gameEngine.getRoom(this.currentLocation);
-        
+
         // Mark room as visited
         if (nextRoom && !nextRoom.isVisited) {
             nextRoom.isVisited = true;
         }
-        
+
+        // Show modal for active hostile creature when entering room
+        if (nextRoom) {
+            const hostileCreaturesInNewRoom = nextRoom.creatures.filter(c => c.isHostile && c.isAlive);
+            if (hostileCreaturesInNewRoom.length > 0 && nextRoom.activeCreatureIndex < hostileCreaturesInNewRoom.length) {
+                const activeCreature = hostileCreaturesInNewRoom[nextRoom.activeCreatureIndex];
+                if (activeCreature && activeCreature.image) {
+                    const modal = document.getElementById('image-modal');
+                    const modalImage = document.getElementById('modal-room-image');
+                    if (modal && modalImage) {
+                        modal.style.display = 'flex';
+                        modalImage.src = activeCreature.image;
+                        modalImage.alt = `${activeCreature.name} - ${activeCreature.description}`;
+                    }
+                }
+            }
+        }
+
         return nextRoom ? nextRoom.getDescription() : "You move to an unknown location.";
     }
     
@@ -288,12 +307,31 @@ class Player {
         if (creatureDied) {
             result += ` The ${creature.name} is <span class="combat-highlight">dead</span>!`;
             currentRoom.removeCreature(creature.id);
+
+            // Increment activeCreatureIndex and show next creature modal if available
+            currentRoom.activeCreatureIndex++;
+            const remainingHostile = currentRoom.creatures.filter(c => c.isHostile && c.isAlive);
+            if (remainingHostile.length > 0 && currentRoom.activeCreatureIndex < remainingHostile.length) {
+                const nextCreature = remainingHostile[currentRoom.activeCreatureIndex];
+                if (nextCreature && nextCreature.image) {
+                    // Show modal for next creature
+                    setTimeout(() => {
+                        const modal = document.getElementById('image-modal');
+                        const modalImage = document.getElementById('modal-room-image');
+                        if (modal && modalImage) {
+                            modal.style.display = 'flex';
+                            modalImage.src = nextCreature.image;
+                            modalImage.alt = `${nextCreature.name} - ${nextCreature.description}`;
+                        }
+                    }, 500); // Small delay for dramatic effect
+                }
+            }
         } else {
             // Creature attacks back
             const counterAttack = creature.attack(this);
             result += "\n" + counterAttack;
         }
-        
+
         return result;
     }
     
@@ -636,7 +674,8 @@ class GameEngine {
                 'A terrifying alien creature with sharp claws and dripping fangs. It moves with unnatural speed.',
                 50,
                 15,
-                true
+                true,
+                './assets/fight_scene_xenomorph.png'
             ),
             alien_beast: new Creature(
                 'alien_beast',
@@ -644,7 +683,8 @@ class GameEngine {
                 'A large, six-legged creature with tough hide and powerful jaws. It looks hungry.',
                 70,
                 10,
-                true
+                true,
+                './assets/fight_scene_Alien_Beast.png'
             ),
             swarm: new Creature(
                 'swarm',
@@ -652,7 +692,8 @@ class GameEngine {
                 'A swarm of small, flying alien creatures that move as one. Individually weak, but dangerous in numbers.',
                 30,
                 8,
-                true
+                true,
+                './assets/fight_scene_swarm.png'
             ),
             friendly_alien: new Creature(
                 'friendly_alien',
@@ -660,7 +701,8 @@ class GameEngine {
                 'A small, timid creature with large eyes. It seems curious rather than hostile.',
                 20,
                 0,
-                false
+                false,
+                './assets/fight_scene_peaceful_alien.png'
             ),
             mountain_guardian: new Creature(
                 'mountain_guardian',
@@ -668,7 +710,8 @@ class GameEngine {
                 'A massive, armored alien beast adapted to the harsh mountain environment. Its thick hide glistens with ice crystals.',
                 55,
                 18,
-                true
+                true,
+                './assets/fight_scene_Mountain_Guardian.png'
             ),
             peak_sentinel: new Creature(
                 'peak_sentinel',
@@ -676,7 +719,8 @@ class GameEngine {
                 'A swift, aggressive predator that stalks the mountain peaks. Its razor-sharp claws leave deep gouges in the rock.',
                 40,
                 16,
-                true
+                true,
+                './assets/fight_scene_Peak_Sentinel.png'
             )
         };
     }
@@ -952,18 +996,27 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         });
         
         // Add attack buttons for hostile creatures
-        currentRoom.creatures.forEach(creature => {
-            if (creature.isHostile && creature.isAlive) {
-                const btn = document.createElement('button');
-                btn.className = 'context-btn attack-btn';
-                btn.textContent = `⚔️ Attack ${creature.name}`;
-                btn.addEventListener('click', () => {
+        const hostileCreatures = currentRoom.creatures.filter(c => c.isHostile && c.isAlive);
+        hostileCreatures.forEach((creature, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'context-btn attack-btn';
+
+            // Only enable button for creature at activeCreatureIndex
+            const isActive = index === currentRoom.activeCreatureIndex;
+            if (!isActive) {
+                btn.disabled = true;
+                btn.classList.add('disabled');
+            }
+
+            btn.textContent = `⚔️ Attack ${creature.name}`;
+            btn.addEventListener('click', () => {
+                if (isActive) {
                     this.displayMessage(`> attack ${creature.name}`);
                     const result = this.processCommand(`attack ${creature.name}`);
                     this.displayMessage(result);
-                });
-                contextContainer.appendChild(btn);
-            }
+                }
+            });
+            contextContainer.appendChild(btn);
         });
         
         // Add buttons for all items in inventory

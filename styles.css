@@ -560,6 +560,21 @@ header p {
     transform: scale(0.95);
 }
 
+.context-btn:disabled,
+.context-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: rgba(100, 100, 100, 0.2);
+    color: #666;
+    border-color: #444;
+}
+
+.context-btn:disabled:hover,
+.context-btn.disabled:hover {
+    transform: none;
+    background-color: rgba(100, 100, 100, 0.2);
+}
+
 .game-input {
     display: flex;
     gap: 10px;
