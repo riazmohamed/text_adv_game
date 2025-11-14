@@ -380,6 +380,11 @@ header p {
     white-space: pre-wrap;
     font-size: 1rem;
     line-height: 1.6;
+    max-height: 600px;           /* Cap maximum height */
+    min-height: 400px;           /* Minimum height for consistency */
+    overflow-y: auto;            /* Enable vertical scrolling */
+    scroll-behavior: smooth;     /* Smooth scroll animation */
+    padding-right: 10px;         /* Prevent text from touching scrollbar */
 }
 
 /* Compass Navigation */

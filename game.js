@@ -772,7 +772,10 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
     // Display a message in the game output
     displayMessage(message) {
         this.gameOutput.innerHTML += message + '\n\n';
-        this.gameOutput.scrollTop = this.gameOutput.scrollHeight;
+        // Use requestAnimationFrame for reliable scroll timing
+        requestAnimationFrame(() => {
+            this.gameOutput.scrollTop = this.gameOutput.scrollHeight;
+        });
     }
     
     // Set up event listeners
