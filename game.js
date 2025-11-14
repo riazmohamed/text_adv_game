@@ -104,7 +104,7 @@ class Room {
         );
         if (hostileCreatures.length > 0) {
             const creatureNames = hostileCreatures.map(c => c.name).join(' and ');
-            desc += `\n\n<span class="creature-alert">[${creatureNames.toUpperCase()}] DETECTED! MUST ENGAGE!!</span>`;
+            desc += `\n\n<span class="creature-alert">${creatureNames.toUpperCase()}] DETECTED! MUST ENGAGE!!</span>`;
         }
         
         // Add available exits
