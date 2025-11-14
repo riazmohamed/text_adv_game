@@ -174,6 +174,15 @@ class Player {
         const currentRoom = gameEngine.getRoom(this.currentLocation);
         if (!currentRoom) return "You're in an unknown location.";
         
+        // Check if there are hostile creatures in the current room
+        const hostileCreatures = currentRoom.creatures.filter(creature =>
+            creature.isHostile && creature.isAlive
+        );
+        
+        if (hostileCreatures.length > 0) {
+            return `<span class="danger-text">You can't leave while there are hostile creatures here! You must defeat ${hostileCreatures.map(c => c.name).join(' and ')} first.</span>`;
+        }
+        
         const nextRoomId = currentRoom.exits[direction.toLowerCase()];
         if (!nextRoomId) {
             return `You can't go ${direction} from here.`;
@@ -332,6 +341,25 @@ class GameEngine {
         if (startRoom) {
             startRoom.isVisited = true;
             this.displayMessage(startRoom.getDescription());
+            
+            // Check for hostile creatures in starting room and trigger attack
+            const hostileCreatures = startRoom.creatures.filter(creature =>
+                creature.isHostile && creature.isAlive
+            );
+            
+            if (hostileCreatures.length > 0) {
+                const attackingCreature = hostileCreatures[0];
+                const damageDealt = Math.floor(Math.random() * attackingCreature.damage) + 1;
+                this.player.takeDamage(damageDealt);
+                
+                this.displayMessage(`\n<span class="danger-text">The ${attackingCreature.name} attacks you for ${damageDealt} damage! You must defend yourself!</span>`);
+                
+                // Check if player died
+                if (!this.player.isAlive) {
+                    this.isGameOver = true;
+                    this.displayMessage(`<span class="danger-text">You have died! GAME OVER.</span>`);
+                }
+            }
         }
         
         this.updateStatusDisplays();
@@ -592,6 +620,33 @@ class GameEngine {
         
         let result = '';
         
+        // Check for hostile creatures in current room for non-combat actions
+        const currentRoom = this.getRoom(this.player.currentLocation);
+        const hostileCreatures = currentRoom ? currentRoom.creatures.filter(creature =>
+            creature.isHostile && creature.isAlive
+        ) : [];
+        
+        // Handle creature attack on room entry
+        if (hostileCreatures.length > 0 && action !== 'attack' && action !== 'fight' && action !== 'hit') {
+            // Creature attacks player for trying to do other things
+            const attackingCreature = hostileCreatures[0];
+            const damageDealt = Math.floor(Math.random() * attackingCreature.damage) + 1;
+            this.player.takeDamage(damageDealt);
+            
+            result = `<span class="danger-text">While you try to ${action}, the ${attackingCreature.name} attacks you for ${damageDealt} damage! You must fight the creature first!</span>`;
+            
+            // Check if player died
+            if (!this.player.isAlive) {
+                this.isGameOver = true;
+                result += `\n\n<span class="danger-text">You have died! GAME OVER.</span>`;
+            }
+            
+            // Update status displays
+            this.updateStatusDisplays();
+            this.checkGameConditions();
+            return result;
+        }
+        
         switch (action) {
             case 'go':
             case 'move':
@@ -605,7 +660,6 @@ class GameEngine {
                 
             case 'look':
             case 'l':
-                const currentRoom = this.getRoom(this.player.currentLocation);
                 result = currentRoom ? currentRoom.getDescription() : "You're in an unknown location.";
                 
                 // Open modal with room image
@@ -615,6 +669,21 @@ class GameEngine {
                     modal.style.display = 'flex';
                     modalImage.src = currentRoom.image;
                     modalImage.alt = currentRoom.name;
+                }
+                
+                // Trigger creature attack if present and hostile
+                if (hostileCreatures.length > 0) {
+                    const attackingCreature = hostileCreatures[0];
+                    const damageDealt = Math.floor(Math.random() * attackingCreature.damage) + 1;
+                    this.player.takeDamage(damageDealt);
+                    
+                    result += `\n\n<span class="danger-text">The ${attackingCreature.name} attacks you for ${damageDealt} damage! You must defend yourself!</span>`;
+                    
+                    // Check if player died
+                    if (!this.player.isAlive) {
+                        this.isGameOver = true;
+                        result += `\n\n<span class="danger-text">You have died! GAME OVER.</span>`;
+                    }
                 }
                 break;
                 
@@ -837,10 +906,15 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
         const availableExits = currentRoom.getExits();
         const directions = ['north', 'south', 'east', 'west'];
         
+        // Check for hostile creatures in current room
+        const hostileCreatures = currentRoom.creatures.filter(creature =>
+            creature.isHostile && creature.isAlive
+        );
+        
         directions.forEach(dir => {
             const btn = document.querySelector(`.direction-btn.${dir}`);
             if (btn) {
-                if (availableExits.includes(dir)) {
+                if (availableExits.includes(dir) && hostileCreatures.length === 0) {
                     btn.disabled = false;
                 } else {
                     btn.disabled = true;
