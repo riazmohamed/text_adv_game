@@ -2,12 +2,14 @@
 
 // Item Class - Represents objects that player can collect and use
 class Item {
-    constructor(id, name, description, isUsable = false, isEquippable = false) {
+    constructor(id, name, description, isUsable = false, isEquippable = false, maxUses = null) {
         this.id = id; // Unique identifier for the item
         this.name = name; // Display name of the item
         this.description = description; // Text description of the item
         this.isUsable = isUsable; // Can the item be used?
         this.isEquippable = isEquippable; // Can the item be equipped?
+        this.maxUses = maxUses; // Maximum number of uses (null = unlimited)
+        this.currentUses = maxUses; // Current remaining uses
     }
     
     // Get the item's description
@@ -37,10 +39,10 @@ class Creature {
     // Attack the player
     attack(player) {
         if (!this.isAlive || !this.isHostile) return;
-        
+
         const damageDealt = Math.floor(Math.random() * this.damage) + 1;
         player.takeDamage(damageDealt);
-        return `${this.name} attacks you for ${damageDealt} damage!`;
+        return `${this.name} <span class="combat-highlight">attacks</span> you for <span class="combat-highlight">${damageDealt}</span> <span class="combat-highlight">damage</span>!`;
     }
     
     // Take damage from the player
@@ -104,7 +106,7 @@ class Room {
         );
         if (hostileCreatures.length > 0) {
             const creatureNames = hostileCreatures.map(c => c.name).join(' and ');
-            desc += `\n\n<span class="creature-alert">${creatureNames.toUpperCase()}] DETECTED! MUST ENGAGE!!</span>`;
+            desc += `\n\n<span class="creature-alert">[${creatureNames.toUpperCase()}] DETECTED! MUST ENGAGE!!</span>`;
         }
         
         // Add available exits
@@ -235,18 +237,28 @@ class Player {
     
     // Use an item from inventory
     use(itemId) {
-        const item = this.inventory.find(i => 
+        const item = this.inventory.find(i =>
             i.id === itemId || i.name.toLowerCase() === itemId.toLowerCase());
-        
+
         if (!item) {
             return `You don't have a ${itemId}.`;
         }
-        
+
         if (!item.isUsable) {
             return `You can't use the ${item.name}.`;
         }
-        
-        return item.use(this);
+
+        const result = item.use(this);
+
+        // Remove item from inventory if it has been depleted
+        if (item.currentUses !== null && item.currentUses <= 0) {
+            const index = this.inventory.indexOf(item);
+            if (index !== -1) {
+                this.inventory.splice(index, 1);
+            }
+        }
+
+        return result;
     }
     
     // Attack a creature in the current room
@@ -270,11 +282,11 @@ class Player {
         // Player attacks creature
         const playerDamage = Math.floor(Math.random() * 15) + 5; // 5-20 damage
         const creatureDied = creature.takeDamage(playerDamage);
-        
-        let result = `You attack the ${creature.name} for ${playerDamage} damage!`;
-        
+
+        let result = `You <span class="combat-highlight">attack</span> the ${creature.name} for <span class="combat-highlight">${playerDamage}</span> <span class="combat-highlight">damage</span>!`;
+
         if (creatureDied) {
-            result += ` The ${creature.name} is dead!`;
+            result += ` The ${creature.name} is <span class="combat-highlight">dead</span>!`;
             currentRoom.removeCreature(creature.id);
         } else {
             // Creature attacks back
@@ -307,7 +319,13 @@ class Player {
         if (this.inventory.length === 0) {
             return "Your inventory is empty.";
         }
-        return this.inventory.map(item => item.name).join(", ");
+        return this.inventory.map(item => {
+            // Show usage count for items with limited uses
+            if (item.currentUses !== null) {
+                return `${item.name} (${item.currentUses} use${item.currentUses !== 1 ? 's' : ''} left)`;
+            }
+            return item.name;
+        }).join(", ");
     }
 }
 
@@ -442,14 +460,16 @@ class GameEngine {
                 'Medkit',
                 'A medical kit that can restore health.',
                 true,
-                false
+                false,
+                2  // Can be used 2 times
             ),
             energy_bar: new Item(
                 'energy_bar',
                 'Energy Bar',
                 'A high-energy food bar that restores a small amount of health.',
                 true,
-                false
+                false,
+                2  // Can be used 2 times
             ),
             flashlight: new Item(
                 'flashlight',
@@ -477,7 +497,8 @@ class GameEngine {
                 'Power Battery',
                 'A high-capacity battery that can power electronic devices.',
                 true,
-                false
+                false,
+                1  // Can only be used once
             ),
             beacon: new Item(
                 'beacon',
@@ -501,17 +522,50 @@ class GameEngine {
                 false
             )
         };
-        
+
+        // Set beacon powered state
+        this.items.beacon.isPowered = false;
+
+        // Set up item use functions
+        // Set up item use functions
+        // Set up item use functions
+        // Set up item use functions
         // Set up item use functions
         this.items.medkit.use = function(player) {
             const healAmount = 50;
             player.health = Math.min(player.health + healAmount, player.maxHealth);
+
+            // Decrement uses
+            if (this.currentUses !== null) {
+                this.currentUses--;
+                const usesRemaining = this.currentUses;
+
+                if (usesRemaining > 0) {
+                    return `<span class="success-text">You use the medkit and restore ${healAmount} health. (${usesRemaining} use${usesRemaining !== 1 ? 's' : ''} remaining)</span>`;
+                } else {
+                    return `<span class="success-text">You use the medkit and restore ${healAmount} health. Medkit consumed!</span>`;
+                }
+            }
+
             return `<span class="success-text">You use the medkit and restore ${healAmount} health.</span>`;
         };
         
         this.items.energy_bar.use = function(player) {
             const healAmount = 20;
             player.health = Math.min(player.health + healAmount, player.maxHealth);
+
+            // Decrement uses
+            if (this.currentUses !== null) {
+                this.currentUses--;
+                const usesRemaining = this.currentUses;
+
+                if (usesRemaining > 0) {
+                    return `<span class="success-text">You eat the energy bar and restore ${healAmount} health. (${usesRemaining} use${usesRemaining !== 1 ? 's' : ''} remaining)</span>`;
+                } else {
+                    return `<span class="success-text">You eat the energy bar and restore ${healAmount} health. Energy Bar consumed!</span>`;
+                }
+            }
+
             return `<span class="success-text">You eat the energy bar and restore ${healAmount} health.</span>`;
         };
         
@@ -521,8 +575,16 @@ class GameEngine {
         
         this.items.battery.use = function(player) {
             // Check if player has beacon
-            const hasBeacon = player.inventory.some(item => item.id === 'beacon');
-            if (hasBeacon) {
+            const beacon = player.inventory.find(item => item.id === 'beacon');
+            if (beacon) {
+                // Power the beacon
+                beacon.isPowered = true;
+
+                // Decrement uses
+                if (this.currentUses !== null) {
+                    this.currentUses--;
+                    return `<span class="success-text">You install the battery in the beacon. It's now ready to activate! Battery consumed!</span>`;
+                }
                 return `<span class="success-text">You install the battery in the beacon. It's now ready to activate!</span>`;
             }
             return `<span class="warning-text">You have nothing to use the battery with.</span>`;
@@ -531,11 +593,20 @@ class GameEngine {
         this.items.beacon.use = function(player) {
             // Check if player is at mountain peak
             if (player.currentLocation === 'mountain_peak') {
-                // Check if beacon has battery
-                const hasBattery = player.inventory.some(item => item.id === 'battery');
-                if (hasBattery) {
+                // Check if beacon is powered
+                if (this.isPowered) {
                     gameEngine.isWin = true;
                     gameEngine.isGameOver = true;
+
+                    // Show win image in modal
+                    const modal = document.getElementById('image-modal');
+                    const modalImage = document.getElementById('modal-room-image');
+                    if (modal && modalImage) {
+                        modal.style.display = 'flex';
+                        modalImage.src = './assets/Beacon_win.png';
+                        modalImage.alt = 'Victory - Rescue Beacon Activated!';
+                    }
+
                     return `<span class="success-text">You activate the rescue beacon! A signal shoots into the sky... Rescue is on the way! YOU WIN!</span>`;
                 } else {
                     return `<span class="warning-text">The beacon needs power. You need to find a battery first.</span>`;

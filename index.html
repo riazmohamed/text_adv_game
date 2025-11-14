@@ -177,15 +177,19 @@
             
             <!-- Status Section -->
             <div class="game-status">
-                <div class="status-section">
-                    <h3>Location</h3>
-                    <div id="current-location">Unknown</div>
+                <!-- Compact card for Location and Health -->
+                <div class="status-compact">
+                    <div class="status-section">
+                        <h3>Location</h3>
+                        <div id="current-location">Unknown</div>
+                    </div>
+                    <div class="status-section">
+                        <h3>Health</h3>
+                        <div id="health-status">100/100</div>
+                    </div>
                 </div>
-                <div class="status-section">
-                    <h3>Health</h3>
-                    <div id="health-status">100/100</div>
-                </div>
-                <div class="status-section">
+                <!-- Larger card for Inventory -->
+                <div class="status-section status-inventory">
                     <h3>Inventory</h3>
                     <div id="inventory">Empty</div>
                 </div>

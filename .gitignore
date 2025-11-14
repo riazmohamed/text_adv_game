@@ -4,6 +4,10 @@ notes.md
 NOTES.txt
 notes.txt
 dev-notes.md
+CLAUDE.md
+
+# Code explanation files
+codeExplaination.js
 
 # IDE and editor files
 .vscode/
@@ -19,3 +23,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+memories.json
+
+# Error screenshots
+assets/errors/
