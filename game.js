@@ -601,6 +601,15 @@ class GameEngine {
             case 'l':
                 const currentRoom = this.getRoom(this.player.currentLocation);
                 result = currentRoom ? currentRoom.getDescription() : "You're in an unknown location.";
+                
+                // Open modal with room image
+                const modal = document.getElementById('image-modal');
+                const modalImage = document.getElementById('modal-room-image');
+                if (currentRoom && modal && modalImage) {
+                    modal.style.display = 'flex';
+                    modalImage.src = currentRoom.image;
+                    modalImage.alt = currentRoom.name;
+                }
                 break;
                 
             case 'take':
@@ -827,6 +836,12 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
                 }
             }
         });
+        
+        // Function to close image modal
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+        }
     }
 }
 
