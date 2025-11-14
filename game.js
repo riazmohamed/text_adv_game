@@ -874,6 +874,9 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeScreen.style.display = 'none';
         gameScreen.style.display = 'block';
         
+        // Scroll to top of page when game starts
+        window.scrollTo(0, 0);
+        
         // Initialize game after screen transition
         gameEngine = new GameEngine();
     });
