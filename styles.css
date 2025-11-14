@@ -387,6 +387,31 @@ header p {
     padding-right: 10px;         /* Prevent text from touching scrollbar */
 }
 
+/* Custom scrollbar styling to match game theme */
+.game-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.game-output::-webkit-scrollbar-track {
+    background: rgba(15, 52, 96, 0.3); /* Match game panel background */
+    border-radius: 4px;
+}
+
+.game-output::-webkit-scrollbar-thumb {
+    background: #0f3460; /* Match game border color */
+    border-radius: 4px;
+}
+
+.game-output::-webkit-scrollbar-thumb:hover {
+    background: #e94560; /* Match game accent color on hover */
+}
+
+/* Firefox scrollbar styling */
+.game-output {
+    scrollbar-width: thin;
+    scrollbar-color: #0f3460 rgba(15, 52, 96, 0.3);
+}
+
 /* Compass Navigation */
 .compass-container {
     display: flex;
