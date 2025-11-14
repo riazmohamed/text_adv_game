@@ -19,7 +19,7 @@ class Item {
     
     // Use the item (to be overridden by specific item types)
     use(player) {
-        return `You can't use the ${this.name} right now.`;
+        return `<span class="info-text">You examine the ${this.name}. ${this.description}</span>`;
     }
 }
 
@@ -908,19 +908,21 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
             }
         });
         
-        // Add use buttons for usable items in inventory
+        // Add buttons for all items in inventory
         this.player.inventory.forEach(item => {
-            if (item.isUsable) {
-                const btn = document.createElement('button');
-                btn.className = 'context-btn use-btn';
-                btn.textContent = `✨ Use ${item.name}`;
-                btn.addEventListener('click', () => {
-                    this.displayMessage(`> use ${item.name}`);
-                    const result = this.processCommand(`use ${item.name}`);
-                    this.displayMessage(result);
-                });
-                contextContainer.appendChild(btn);
-            }
+            const btn = document.createElement('button');
+            btn.className = 'context-btn use-btn';
+
+            // Use "Use" for usable items, "Examine" for others
+            const action = item.isUsable ? 'Use' : 'Examine';
+            btn.textContent = `✨ ${action} ${item.name}`;
+
+            btn.addEventListener('click', () => {
+                this.displayMessage(`> use ${item.name}`);
+                const result = this.processCommand(`use ${item.name}`);
+                this.displayMessage(result);
+            });
+            contextContainer.appendChild(btn);
         });
     }
     
