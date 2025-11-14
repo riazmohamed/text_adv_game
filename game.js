@@ -68,10 +68,11 @@ class Creature {
 
 // Room Class - Represents locations in the game
 class Room {
-    constructor(id, name, description) {
+    constructor(id, name, description, image) {
         this.id = id; // Unique identifier for the room
         this.name = name; // Display name of the room
         this.description = description; // Text description of the room
+        this.image = image; // Image for the room
         this.items = []; // Items in the room
         this.creatures = []; // Creatures in the room
         this.exits = {}; // Exits to other rooms (north, south, east, west)
@@ -341,42 +342,48 @@ class GameEngine {
         this.rooms.crash_site = new Room(
             'crash_site',
             'Crash Site',
-            'The smoldering wreckage of your spaceship lies scattered around you. The alien air is thin and cold. Strange purple plants grow in clusters around the metal debris.'
+            'The smoldering wreckage of your spaceship lies scattered around you. The alien air is thin and cold. Strange purple plants grow in clusters around the metal debris.',
+            'assets/crash_site.png'
         );
         
         // Alien Forest
         this.rooms.alien_forest = new Room(
             'alien_forest',
             'Alien Forest',
-            'Tall, bioluminescent trees tower above you, their glowing blue leaves casting eerie shadows. The ground is soft and spongy, and you hear strange rustling sounds in the distance.'
+            'Tall, bioluminescent trees tower above you, their glowing blue leaves casting eerie shadows. The ground is soft and spongy, and you hear strange rustling sounds in the distance.',
+            'assets/alien_forest.png'
         );
         
         // Crystal Caves
         this.rooms.crystal_caves = new Room(
             'crystal_caves',
             'Crystal Caves',
-            'The walls of this cave are lined with shimmering crystals that pulse with an inner light. The air hums with energy, and you can hear dripping water echoing in the distance.'
+            'The walls of this cave are lined with shimmering crystals that pulse with an inner light. The air hums with energy, and you can hear dripping water echoing in the distance.',
+            'assets/crystal_caves.png'
         );
         
         // Abandoned Research Facility
         this.rooms.research_facility = new Room(
             'research_facility',
             'Abandoned Research Facility',
-            'This once-bustling research facility is now silent and dusty. Broken equipment lines the walls, and computer screens flicker with error messages. Papers and data pads are scattered on the floor.'
+            'This once-bustling research facility is now silent and dusty. Broken equipment lines the walls, and computer screens flicker with error messages. Papers and data pads are scattered on the floor.',
+            'assets/research_facility.png'
         );
         
         // Mountain Peak
         this.rooms.mountain_peak = new Room(
             'mountain_peak',
             'Mountain Peak',
-            'You stand at the highest point of the alien mountain range. The view is breathtaking - you can see the entire alien landscape spread out below. The wind howls fiercely at this altitude.'
+            'You stand at the highest point of the alien mountain range. The view is breathtaking - you can see the entire alien landscape spread out below. The wind howls fiercely at this altitude.',
+            'assets/mountain_peak.png'
         );
         
         // Underground Tunnels
         this.rooms.underground_tunnels = new Room(
             'underground_tunnels',
             'Underground Tunnels',
-            'These dark, narrow tunnels wind deep beneath the planet\'s surface. The air is damp and musty, and strange markings cover the walls.'
+            'These dark, narrow tunnels wind deep beneath the planet\'s surface. The air is damp and musty, and strange markings cover the walls.',
+            'assets/underground_tunnels.png'
         );
         
         // Connect rooms with exits
@@ -683,7 +690,18 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
     // Update status displays
     updateStatusDisplays() {
         const currentRoom = this.getRoom(this.player.currentLocation);
-        this.currentLocationDisplay.textContent = currentRoom ? currentRoom.name : 'Unknown';
+        if (currentRoom) {
+            this.currentLocationDisplay.textContent = currentRoom.name;
+            const roomImage = document.getElementById('room-image');
+            roomImage.style.opacity = 0;
+            setTimeout(() => {
+                roomImage.src = currentRoom.image;
+                roomImage.style.display = 'block';
+                roomImage.style.opacity = 1;
+            }, 250);
+        } else {
+            this.currentLocationDisplay.textContent = 'Unknown';
+        }
         this.healthDisplay.textContent = `${this.player.health}/${this.player.maxHealth}`;
         this.inventoryDisplay.textContent = this.player.getInventory();
         this.updateCompass();
