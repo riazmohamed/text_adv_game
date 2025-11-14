@@ -343,7 +343,7 @@ class GameEngine {
             'crash_site',
             'Crash Site',
             'The smoldering wreckage of your spaceship lies scattered around you. The alien air is thin and cold. Strange purple plants grow in clusters around the metal debris.',
-            'assets/crash_site.png'
+            './assets/crash_site.png'
         );
         
         // Alien Forest
@@ -351,7 +351,7 @@ class GameEngine {
             'alien_forest',
             'Alien Forest',
             'Tall, bioluminescent trees tower above you, their glowing blue leaves casting eerie shadows. The ground is soft and spongy, and you hear strange rustling sounds in the distance.',
-            'assets/alien_forest.png'
+            './assets/alien_forest.png'
         );
         
         // Crystal Caves
@@ -359,7 +359,7 @@ class GameEngine {
             'crystal_caves',
             'Crystal Caves',
             'The walls of this cave are lined with shimmering crystals that pulse with an inner light. The air hums with energy, and you can hear dripping water echoing in the distance.',
-            'assets/crystal_caves.png'
+            './assets/crystal_caves.png'
         );
         
         // Abandoned Research Facility
@@ -367,7 +367,7 @@ class GameEngine {
             'research_facility',
             'Abandoned Research Facility',
             'This once-bustling research facility is now silent and dusty. Broken equipment lines the walls, and computer screens flicker with error messages. Papers and data pads are scattered on the floor.',
-            'assets/research_facility.png'
+            './assets/research_facility.png'
         );
         
         // Mountain Peak
@@ -375,7 +375,7 @@ class GameEngine {
             'mountain_peak',
             'Mountain Peak',
             'You stand at the highest point of the alien mountain range. The view is breathtaking - you can see the entire alien landscape spread out below. The wind howls fiercely at this altitude.',
-            'assets/mountain_peak.png'
+            './assets/mountain_peak.png'
         );
         
         // Underground Tunnels
@@ -383,7 +383,7 @@ class GameEngine {
             'underground_tunnels',
             'Underground Tunnels',
             'These dark, narrow tunnels wind deep beneath the planet\'s surface. The air is damp and musty, and strange markings cover the walls.',
-            'assets/underground_tunnels.png'
+            './assets/underground_tunnels.png'
         );
         
         // Connect rooms with exits
