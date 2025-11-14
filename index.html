@@ -8,15 +8,142 @@
 </head>
 <body>
     <div class="game-container">
-        <header>
-            <h1>Alien Planet Survival</h1>
-            <p>You've crash-landed on a mysterious alien planet. Survive the creatures and find a way to call for rescue!</p>
-        </header>
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="welcome-screen">
+            <header class="welcome-header">
+                <h1>🚀 Alien Planet Survival</h1>
+                <p class="welcome-subtitle">A Text Adventure Game</p>
+            </header>
+            
+            <div class="welcome-content">
+                <section class="story-section">
+                    <h2>🌍 Your Story</h2>
+                    <p>You've crash-landed on a mysterious alien planet after your spaceship encountered a meteor storm. Your ship is damaged, communication systems are down, and hostile creatures roam the landscape. Your mission: survive the dangers, explore the planet, and find a way to call for rescue!</p>
+                </section>
+                
+                <section class="visuals-section">
+                    <h2>🖼️ Explore the Planet</h2>
+                    <div class="location-previews">
+                        <div class="preview-card">
+                            <img src="./assets/crash_site.png" alt="Crash Site" class="preview-image">
+                            <h3>Crash Site</h3>
+                            <p>Where your adventure begins</p>
+                        </div>
+                        <div class="preview-card">
+                            <img src="./assets/alien_forest.png" alt="Alien Forest" class="preview-image">
+                            <h3>Alien Forest</h3>
+                            <p>Mysterious and dangerous</p>
+                        </div>
+                        <div class="preview-card">
+                            <img src="./assets/crystal_caves.png" alt="Crystal Caves" class="preview-image">
+                            <h3>Crystal Caves</h3>
+                            <p>Hidden treasures await</p>
+                        </div>
+                        <div class="preview-card">
+                            <img src="./assets/research_facility.png" alt="Research Facility" class="preview-image">
+                            <h3>Research Facility</h3>
+                            <p>Abandoned but useful</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="rules-section">
+                    <h2>📖 How to Play</h2>
+                    <div class="rules-grid">
+                        <div class="rule-card">
+                            <h3>🎮 Controls</h3>
+                            <ul>
+                                <li>Use navigation buttons to move between locations</li>
+                                <li>Click action buttons for quick commands</li>
+                                <li>Type commands in the text input</li>
+                                <li>Available commands: go [direction], look, take [item], use [item], attack [creature], help</li>
+                            </ul>
+                        </div>
+                        <div class="rule-card">
+                            <h3>🎯 Objectives</h3>
+                            <ul>
+                                <li>Explore different locations on the planet</li>
+                                <li>Collect useful items from various areas</li>
+                                <li>Defeat hostile creatures you encounter</li>
+                                <li>Find the emergency beacon at the mountain peak</li>
+                                <li>Gather all required items to activate the beacon</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="conditions-section">
+                    <div class="condition-card win-card">
+                        <h3>🏆 How to Win</h3>
+                        <ol>
+                            <li>Defeat the hostile creatures blocking your path</li>
+                            <li>Collect the <strong>Energy Cell</strong> from the Research Facility</li>
+                            <li>Find the <strong>Emergency Beacon</strong> at the Mountain Peak</li>
+                            <li>Use the Energy Cell to activate the beacon</li>
+                            <li>Successfully call for rescue and escape the planet!</li>
+                        </ol>
+                    </div>
+                    <div class="condition-card lose-card">
+                        <h3>💀 How to Lose</h3>
+                        <ul>
+                            <li>Your health drops to 0 from creature attacks</li>
+                            <li>You get lost in the underground tunnels</li>
+                            <li>You fail to gather the necessary items</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <div class="start-section">
+                    <button id="start-game-btn" class="start-game-btn">🚀 Start Your Adventure</button>
+                    <p class="start-note">Good luck, survivor! The fate of your crew rests in your hands.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Screen (Initially Hidden) -->
+        <div id="game-screen" class="game-screen" style="display: none;">
+            <header>
+                <h1>Alien Planet Survival</h1>
+                <p>You've crash-landed on a mysterious alien planet. Survive the creatures and find a way to call for rescue!</p>
+            </header>
         
         <main class="game-main">
             <div class="game-layout">
-                <!-- Game Output - Full width -->
-                <div class="game-output-panel">
+                <!-- Left side: Visual and Controls -->
+                <div class="game-left-panel">
+                    <div class="game-visuals">
+                        <img id="room-image" src="" alt="Current Location" style="display:none;">
+                    </div>
+                    
+                    <!-- Direction Compass -->
+                    <div class="compass-container">
+                        <div class="compass">
+                            <button class="direction-btn north" data-direction="north">↑ North</button>
+                            <div class="compass-middle">
+                                <button class="direction-btn west" data-direction="west">← West</button>
+                                <div class="compass-center">Navigation</div>
+                                <button class="direction-btn east" data-direction="east">East →</button>
+                            </div>
+                            <button class="direction-btn south" data-direction="south">↓ South</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-btn" data-action="look">👁️ Look</button>
+                        <button class="action-btn" data-action="inventory">🎒 Inventory</button>
+                        <button class="action-btn" data-action="status">❤️ Status</button>
+                        <button class="action-btn" data-action="help">❓ Help</button>
+                    </div>
+                    
+                    <!-- Dynamic Context Buttons -->
+                    <div id="context-buttons" class="context-buttons">
+                        <!-- Items and creatures buttons will appear here dynamically -->
+                    </div>
+                </div>
+                
+                <!-- Right side: Game Output -->
+                <div class="game-right-panel">
                     <div class="game-display">
                         <div id="game-output" class="game-output">
                             <!-- Game text will be displayed here -->
@@ -24,7 +151,7 @@
                     </div>
                     
                     <div class="game-input">
-                        <input type="text" id="command-input" placeholder="Type command or use buttons below..." autofocus>
+                        <input type="text" id="command-input" placeholder="Type command or use buttons above..." autofocus>
                         <button id="submit-button">Go</button>
                     </div>
                 </div>
@@ -46,38 +173,6 @@
                 </div>
             </div>
             
-            <!-- Game Controls - Moved to bottom -->
-            <div class="game-controls-panel">
-                <div class="game-visuals">
-                    <img id="room-image" src="" alt="Current Location" style="display:none;">
-                </div>
-                
-                <!-- Direction Compass -->
-                <div class="compass-container">
-                    <div class="compass">
-                        <button class="direction-btn north" data-direction="north">↑ North</button>
-                        <div class="compass-middle">
-                            <button class="direction-btn west" data-direction="west">← West</button>
-                            <div class="compass-center">Navigation</div>
-                            <button class="direction-btn east" data-direction="east">East →</button>
-                        </div>
-                        <button class="direction-btn south" data-direction="south">↓ South</button>
-                    </div>
-                </div>
-                
-                <!-- Quick Action Buttons -->
-                <div class="action-buttons">
-                    <button class="action-btn" data-action="look">👁️ Look</button>
-                    <button class="action-btn" data-action="inventory">🎒 Inventory</button>
-                    <button class="action-btn" data-action="status">❤️ Status</button>
-                    <button class="action-btn" data-action="help">❓ Help</button>
-                </div>
-                
-                <!-- Dynamic Context Buttons -->
-                <div id="context-buttons" class="context-buttons">
-                    <!-- Items and creatures buttons will appear here dynamically -->
-                </div>
-            </div>
         </main>
         
         <footer>
@@ -85,6 +180,7 @@
                 <p>Commands: go [direction], look, take [item], use [item], attack [creature], help</p>
             </div>
         </footer>
+        </div>
     </div>
     
     <script src="game.js"></script>

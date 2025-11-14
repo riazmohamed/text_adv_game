@@ -1,6 +1,6 @@
 // Space Adventure Game - JavaScript Implementation
 
-// Item Class - Represents objects the player can collect and use
+// Item Class - Represents objects that player can collect and use
 class Item {
     constructor(id, name, description, isUsable = false, isEquippable = false) {
         this.id = id; // Unique identifier for the item
@@ -43,7 +43,7 @@ class Creature {
         return `${this.name} attacks you for ${damageDealt} damage!`;
     }
     
-    // Take damage from player
+    // Take damage from the player
     takeDamage(amount) {
         this.health -= amount;
         if (this.health <= 0) {
@@ -54,13 +54,13 @@ class Creature {
         return false; // Creature survived
     }
     
-    // Get creature status
+    // Get the creature's status
     checkStatus() {
         if (!this.isAlive) return `${this.name} is dead.`;
         return `${this.name} (Health: ${this.health}/${this.maxHealth})`;
     }
     
-    // Get creature description
+    // Get the creature's description
     getDescription() {
         return this.description;
     }
@@ -79,7 +79,7 @@ class Room {
         this.isVisited = false; // Has the player visited this room before?
     }
     
-    // Get room description
+    // Get the room's description
     getDescription() {
         let desc = `<span class="location-name">${this.name}</span>\n\n${this.description}`;
         
@@ -276,7 +276,7 @@ class Player {
         }
     }
     
-    // Check player status
+    // Check the player's status
     checkStatus() {
         if (!this.isAlive) {
             return "You are dead.";
@@ -323,7 +323,7 @@ class GameEngine {
         
         // Display starting message
         this.displayMessage("=== ALIEN PLANET SURVIVAL ===\n\n");
-        this.displayMessage("Your spaceship has crashed on an unknown alien planet. You must survive the hostile creatures and find a way to call for rescue!\n\n");
+        this.displayMessage("Your spaceship has crashed on an unknown alien planet. You must survive hostile creatures and find a way to call for rescue!\n\n");
         this.displayMessage("Type 'help' for available commands.\n\n");
         
         // Show first room
@@ -482,7 +482,7 @@ class GameEngine {
         };
         
         this.items.battery.use = function(player) {
-            // Check if player has the beacon
+            // Check if player has beacon
             const hasBeacon = player.inventory.some(item => item.id === 'beacon');
             if (hasBeacon) {
                 return `<span class="success-text">You install the battery in the beacon. It's now ready to activate!</span>`;
@@ -830,8 +830,23 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
     }
 }
 
-// Initialize the game when the page loads
+// Global game engine variable
 let gameEngine;
+
+// Welcome Screen Handler
 document.addEventListener('DOMContentLoaded', () => {
-    gameEngine = new GameEngine();
+    // Get DOM elements for welcome screen
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const startGameBtn = document.getElementById('start-game-btn');
+    
+    // Handle start game button click
+    startGameBtn.addEventListener('click', function() {
+        // Hide welcome screen and show game screen
+        welcomeScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+        
+        // Initialize game after screen transition
+        gameEngine = new GameEngine();
+    });
 });

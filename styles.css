@@ -9,6 +9,271 @@ body {
     line-height: 1.6;
 }
 
+/* Welcome Screen Styles */
+.welcome-screen {
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-left: 2px solid #0f3460;
+    border-right: 2px solid #0f3460;
+}
+
+.welcome-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e94560;
+}
+
+.welcome-header h1 {
+    color: #e94560;
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 0 0 15px #e94560;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { text-shadow: 0 0 15px #e94560; }
+    50% { text-shadow: 0 0 25px #e94560, 0 0 35px #e94560; }
+    100% { text-shadow: 0 0 15px #e94560; }
+}
+
+.welcome-subtitle {
+    color: #a0a0a0;
+    font-size: 1.3rem;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.welcome-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.story-section {
+    text-align: center;
+    margin-bottom: 50px;
+    padding: 30px;
+    background-color: rgba(15, 52, 96, 0.2);
+    border-radius: 10px;
+    border: 1px solid #0f3460;
+}
+
+.story-section h2 {
+    color: #53d8fb;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.story-section p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.visuals-section {
+    margin-bottom: 50px;
+}
+
+.visuals-section h2 {
+    text-align: center;
+    color: #53d8fb;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.location-previews {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 0 20px;
+}
+
+.preview-card {
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(83, 216, 251, 0.3);
+    border-color: #53d8fb;
+}
+
+.preview-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 2px solid #0f3460;
+}
+
+.preview-card h3 {
+    color: #f7b731;
+    font-size: 1.3rem;
+    margin: 10px 0;
+}
+
+.preview-card p {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.rules-section {
+    margin-bottom: 50px;
+}
+
+.rules-section h2 {
+    text-align: center;
+    color: #53d8fb;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.rule-card {
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.rule-card h3 {
+    color: #e94560;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.rule-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.rule-card li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.rule-card li:before {
+    content: "▸";
+    color: #53d8fb;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.conditions-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.condition-card {
+    border-radius: 10px;
+    padding: 25px;
+    border: 2px solid;
+}
+
+.win-card {
+    background-color: rgba(11, 232, 129, 0.1);
+    border-color: #0be881;
+}
+
+.win-card h3 {
+    color: #0be881;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.lose-card {
+    background-color: rgba(233, 69, 96, 0.1);
+    border-color: #e94560;
+}
+
+.lose-card h3 {
+    color: #e94560;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.condition-card ol, .condition-card ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.condition-card li {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.start-section {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.start-game-btn {
+    background: linear-gradient(45deg, #e94560, #c23651);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.3rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4); }
+    50% { box-shadow: 0 5px 25px rgba(233, 69, 96, 0.8); }
+    100% { box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4); }
+}
+
+.start-game-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.6);
+    background: linear-gradient(45deg, #c23651, #e94560);
+}
+
+.start-game-btn:active {
+    transform: translateY(0);
+}
+
+.start-note {
+    color: #a0a0a0;
+    font-size: 1rem;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+/* Game Screen Styles (Hidden by default) */
+.game-screen {
+    display: none;
+}
+
 .game-container {
     max-width: 900px;
     margin: 0 auto;
@@ -47,26 +312,43 @@ header p {
 
 .game-layout {
     display: flex;
-    flex-direction: column;
     gap: 20px;
+    align-items: flex-start;
 }
 
-/* Game Output Panel - Full width */
-.game-output-panel {
+/* Left Panel - Fixed/Sticky */
+.game-left-panel {
+    position: sticky;
+    top: 20px;
+    flex: 0 0 45%;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* Game Controls Panel - At bottom */
-.game-controls-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color: rgba(15, 52, 96, 0.2);
+.game-visuals {
+    width: 100%;
+    height: 250px;
+    background-color: #000;
     border: 1px solid #0f3460;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+#room-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Right Panel - Scrollable */
+.game-right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .game-visuals {
