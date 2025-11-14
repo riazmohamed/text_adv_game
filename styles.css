@@ -657,6 +657,22 @@ footer {
     color: #f7b731;
 }
 
+/* Creature Alert Styling */
+.creature-alert {
+    color: #e94560;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(233, 69, 96, 0.8);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { text-shadow: 2px 2px 4px rgba(233, 69, 96, 0.8); }
+    50% { text-shadow: 2px 2px 8px rgba(233, 69, 96, 0.8); }
+    100% { text-shadow: 2px 2px 4px rgba(233, 69, 96, 0.8); }
+}
+
 .info-text {
     color: #53d8fb;
 }

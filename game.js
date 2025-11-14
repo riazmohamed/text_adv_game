@@ -93,9 +93,18 @@ class Room {
         // Add creatures in the room
         if (this.creatures.length > 0) {
             desc += "\n\nCreatures: ";
-            const creatureNames = this.creatures.map(creature => 
+            const creatureNames = this.creatures.map(creature =>
                 `<span class="creature-name">${creature.name}</span>`).join(", ");
             desc += creatureNames;
+        }
+        
+        // Add creature alert if hostile creatures are present
+        const hostileCreatures = this.creatures.filter(creature =>
+            creature.isHostile && creature.isAlive
+        );
+        if (hostileCreatures.length > 0) {
+            const creatureNames = hostileCreatures.map(c => c.name).join(' and ');
+            desc += `\n\n<span class="creature-alert">[${creatureNames.toUpperCase()}] DETECTED! MUST ENGAGE!!</span>`;
         }
         
         // Add available exits
