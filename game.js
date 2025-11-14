@@ -300,6 +300,7 @@ class GameEngine {
         this.player = null; // The player object
         this.isGameOver = false; // Is the game over?
         this.isWin = false; // Did the player win?
+        this.hasPlayerMoved = false; // Has the player made their first move?
         this.gameOutput = document.getElementById('game-output'); // Output element
         this.commandInput = document.getElementById('command-input'); // Input element
         this.submitButton = document.getElementById('submit-button'); // Submit button
@@ -580,6 +581,11 @@ class GameEngine {
             return "The game is over. Refresh the page to play again.";
         }
         
+        // Mark that player has made their first move
+        if (!this.hasPlayerMoved) {
+            this.hasPlayerMoved = true;
+        }
+        
         const parts = command.trim().toLowerCase().split(' ');
         const action = parts[0];
         const target = parts.slice(1).join(' ');
@@ -772,10 +778,12 @@ Your goal: Survive the alien creatures and find a way to call for rescue!`;
     // Display a message in the game output
     displayMessage(message) {
         this.gameOutput.innerHTML += message + '\n\n';
-        // Use requestAnimationFrame for reliable scroll timing
-        requestAnimationFrame(() => {
-            this.gameOutput.scrollTop = this.gameOutput.scrollHeight;
-        });
+        // Only auto-scroll after player has made their first move
+        if (this.hasPlayerMoved) {
+            requestAnimationFrame(() => {
+                this.gameOutput.scrollTop = this.gameOutput.scrollHeight;
+            });
+        }
     }
     
     // Set up event listeners
