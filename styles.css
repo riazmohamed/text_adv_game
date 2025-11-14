@@ -92,8 +92,6 @@ header p {
     border-radius: 5px;
     padding: 20px;
     min-height: 400px;
-    max-height: 600px;
-    overflow-y: auto;
 }
 
 .game-output {
