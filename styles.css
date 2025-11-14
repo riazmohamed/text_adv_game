@@ -604,7 +604,33 @@ header p {
     gap: 15px;
 }
 
-.status-section {
+/* Compact card container for Location and Health */
+.status-compact {
+    flex: 0 0 20%;
+    background-color: rgba(15, 52, 96, 0.3);
+    border: 1px solid #0f3460;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Status sections inside compact card */
+.status-compact .status-section {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    flex: none;
+}
+
+.status-compact .status-section h3 {
+    font-size: 0.95rem;
+    margin: 0 0 5px 0;
+}
+
+/* Inventory card - takes remaining space */
+.status-inventory {
     flex: 1;
     background-color: rgba(15, 52, 96, 0.3);
     border: 1px solid #0f3460;
@@ -616,6 +642,13 @@ header p {
     margin: 0 0 10px 0;
     color: #e94560;
     font-size: 1.1rem;
+}
+
+/* Inventory text wrapping */
+#inventory {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 footer {
@@ -657,6 +690,11 @@ footer {
     color: #f7b731;
 }
 
+.combat-highlight {
+    color: #ff0000;
+    font-weight: bold;
+}
+
 /* Creature Alert Styling */
 .creature-alert {
     color: #e94560;
@@ -682,11 +720,15 @@ footer {
     .game-status {
         flex-direction: column;
     }
-    
+
+    .status-compact {
+        flex: 1;
+    }
+
     header h1 {
         font-size: 2rem;
     }
-    
+
     .game-controls-panel {
         padding: 15px;
     }
